@@ -28,5 +28,24 @@ Artık robo3t ihtiyacımız yok.
 2.) .gitignore oluşturdum ve için de göndermek istemediğim dosyaları yada dizinleri yazdım.
 3.) git status ile gidilecek olanları son kez kontrol ettim. Aslında sadece package'ler , src , index.js dosyaları kalmalı.
 4.) git add . => staging are'ya aldım.
-5.) 
+5.) git commit -m "init commit"
+6.) github adresmiie gidip yeni bi repository oluşturdum.
+7.) …or push an existing repository from the command line => altındaki 2 satır kodu sırasıyla çalışyırıyoruz.
+8.) githubdaki bulunduğun sayfayı yenile ve projeni orada gör. 
 
+devam ediyoruz heroku ile
+
+9.) heroku create murat-task-manager
+10.) Öncekinden farkı olarak bu projede dev.env'daki değişkenlerimizin config ayarlarını herokuya tanıtmamız gerekiyor.
+11.) heroku config:set key=value
+12.) heroku config
+13.) heroku config:unset key 
+14.) heroku config => bunu tekrar çalıştırarak git status gibi düşün bunu. durumu görmek için çalışyırıyoruz. Şuan bomboş bir key value confiğimiz var.
+15.) şimdi gerçekten ihtiyacımızo lan key value ları setlemeye geldi.
+16.) heroku config:set JWT_SECRET=thisisasecretformyapp SENDGRID_API_KEY=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 
+17.) atlas sitesine geri dön connect de ve Connect your application seç. Daha sonra short SRV connection string seç ve çıkan url kopyala.
+18.) <password> kısmını 13murat09 ile değştirdikten sonra /test kısmınıda kendi db adım ile değiştiriyorum ve son hali aşağıdaki gibi. Son olarak elimizdeki url'i heroku'ya yukardaki gibi setlicez.
+19.) heroku config:set MONGODB_URL='mongodb+srv://taskapp:13murat09@cluster0-ybv96.mongodb.net/task-manager-api?retryWrites=true'
+20.) heroku config diyerek kontrol edebilirimi key value değerlerimi.
+21.) dev.end'deki PORT kısmını heroku config'de tanımlamamıza gerek yok hereko port olayını kendisi yönetiyor.
+22.) git push heroku master
