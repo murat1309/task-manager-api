@@ -45,7 +45,7 @@ devam ediyoruz heroku ile
 16.) heroku config:set JWT_SECRET=thisisasecretformyapp SENDGRID_API_KEY=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 
 17.) atlas sitesine geri dön connect de ve Connect your application seç. Daha sonra short SRV connection string seç ve çıkan url kopyala.
 18.) <password> kısmını 13murat09 ile değştirdikten sonra /test kısmınıda kendi db adım ile değiştiriyorum ve son hali aşağıdaki gibi. Son olarak elimizdeki url'i heroku'ya yukardaki gibi setlicez.
-19.) heroku config:set MONGODB_URL='mongodb+srv://taskapp:13murat09@cluster0-ybv96.mongodb.net/task-manager-api?retryWrites=true'
+19.) heroku config:set MONGODB_URL=mongodb+srv://taskapp:13murat09@cluster0-ybv96.mongodb.net/task-manager-api?retryWrites=true
 20.) heroku config diyerek kontrol edebilirimi key value değerlerimi.
 21.) dev.end'deki PORT kısmını heroku config'de tanımlamamıza gerek yok hereko port olayını kendisi yönetiyor.
 22.) git push heroku master
