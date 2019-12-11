@@ -4,7 +4,7 @@
   "description": "1.) mongodb server zip indirdik.\r 2.) /users/murat/ altına koyduk rename (mongodb) olarak\r 3.) /users/murat/ yeni bi dosya oluşturdul mongodb-data diye.\r 4.) konsolda herhangi bi yerde çalıştır => /Users/murat/mongodb/bin/mongod.exe --dbpath=/Users/murat/mongodb-data\r 5.) mongodb admin tool için robo3T indir connect yap.\r 6.) proje oluştur. Oluşturduğun projeye git. \r 7.= npm init -y",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node index.js",
     "dev": "env-cmd ./config/dev.env nodemon src/index.js"
   },
   "keywords": [],

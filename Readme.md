@@ -49,3 +49,13 @@ devam ediyoruz heroku ile
 20.) heroku config diyerek kontrol edebilirimi key value değerlerimi.
 21.) dev.end'deki PORT kısmını heroku config'de tanımlamamıza gerek yok hereko port olayını kendisi yönetiyor.
 22.) git push heroku master
+23.) Bunu yapınca bazı hatalar aşdım araştıdığımda çözm şu oldu.
+    23.1.) npm i sharp@latest
+    23.2.) git add .
+    23.3.) git commit -m"sharp latest"
+    23.4.) git push 
+    23.5.) git push heroku master
+    
+24.)https://murat-task-manager.herokuapp.com => deploy balarılı bir şekilde olduktan sonra konsolda çıkan bu url'i alıp
+25.) postman'de prod environment'da url kısmına bunu setleyebilriim artık buraya istek atıcam.
+
