@@ -52,20 +52,22 @@ const userSchema= new mongoose.Schema({
         }
     }],
     avatar: {
-        type: Buffer
+        type: Buffer //store binary image data.
     }
 },{
-    timestamps: true
+    timestamps: true //bunu yazarsan db'de kendisi otomatik her user objesine createdAt ve updatedAt field'larını eklicektir.
 });
 
 
+//virtual= sanal demek. Yani bu tasks filed'ı db'de saklanmicak. AMacı sadece aradaki ilişikiyi belirleme.
+//Yani burdaki ilişkiden şöyle bahsediyorsun. Benim user modelimdki _id (localField) ile Task (ref) modelindeki owner (foreignField) ilişki içerisinde.
 userSchema.virtual('tasks', {
     ref: 'Task',
     localField: '_id',
     foreignField: 'owner'
 });
 
-//toJSON => this means we have the exact same behavior any other time we are sending the user back like => res.send(user)
+//toJSON => otomatik olarak res.send(user) user objesi döndüğün her yerde tokens array'ini , password ve avatar field'larını aşağıdaki kod sayesinde siliyoruz ekrandan.
 // responseData => password and tokensarray not see anymore.
 userSchema.methods.toJSON = function () {
 
@@ -79,24 +81,27 @@ userSchema.methods.toJSON = function () {
     return userObject;
 };
 
-userSchema.methods.generateAuthToken = async function () {
+userSchema.methods.generateAuthToken = async function () {//routers\user.js:29'da çağırılan method.User yani model ismi ile değilde bir örneği bir objesi ile yani küçüçk user ile çağrıldığından statics değilde methods kullandık.
     const user = this;
     const token = await jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
 
-    user.tokens = user.tokens.concat({ token });
+    // const token = await jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '0 seconds'}); // 0 saniye sonra geçersiz olsun dedik. Böyle süre de verilebilir.
+
+    user.tokens = user.tokens.concat({ token }); //Ben mesela farklı farklı cihazlardan login olcam. Her seferinde tek bir token döndürürsem o anlık ne olur diğer hesaplardan çıkış yapar..
+                                                 // Ben bu yüzden User modelimin içine tokens array'i oluşturdum ki eski tokenlar'ımıda tutayım ne olur ne olmaz.
     await user.save();
 
     return token;
 };
 
-userSchema.statics.findByCredentials = async (email, password)=> {
-
+userSchema.statics.findByCredentials = async (email, password)=> { //routers\user.js:28'de çağırılan method. User yani class ismi ile direk çağırıldığından static yaptık.
+                                                                    // login olmak isteyen user'ın email ve password'unun eşleşme işlemine bakılıyor.
     const user = await User.findOne({ email });
 
     if (!user){
         throw new Error('Unable to login.!')
     }
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password); //Gelen password değeri ile (first argument) user'ın db'de yazılı olan hash'li olan parolası(second argument) eşit ise true.
 
     if (!isMatch){
         throw new Error('Unable to login!')
@@ -105,19 +110,23 @@ userSchema.statics.findByCredentials = async (email, password)=> {
     return user;
 };
 
-//hash the plain text passwordbefore saving.
+// function arrow function olamaz. Burda yaptığımız şey middleware. 2 şekilde ulaşılabilir.
+// pre ile önce yapılması istediğin, post ile sonra çalışmasını istediğin şeyleri yapabilirsin.
+// ben burada pre save diyerek user kaydedilmeden önce yapmak istediğm işlemleri belirliyorum.
+// hash the plain text password before saving.
 userSchema.pre('save', async function (next) {
     const user = this;
 
     console.log('just before saving!.');
-//when someone creates a user or when they update their existing user password => get hashed.
-    if (user.isModified('password')){
-        user.password = await bcrypt.hash(user.password, 8);
+
+    if (user.isModified('password')){// user.isModified ?=> birisi yeni user oluşturduğunda veya zaten olan bir user'ın parolasını değiştirmek istediğinde rue döner.
+        user.password = await bcrypt.hash(user.password, 8); //second argument=> how many times the hashing algorithm is executed.
     }
-    next();
+
+    next(); // Kodun bittiğini belirtmek amacıyla en sona yazıyoruz. Yazmazsak fonskiyonun çalışması durmicak.
 });
 
-//delete user tasks when user is remove
+//delete user tasks when user is remove. Herhangi bir user remove etmeden heemn önce bende user'a ait taskları siliyorum.
 userSchema.pre('remove', async function (next) {
     const user = this;
 

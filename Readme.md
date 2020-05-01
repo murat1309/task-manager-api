@@ -1,11 +1,11 @@
 1.) mongodb server zip indirdik.
 2.) /users/murat/ altına koyduk rename (mongodb) olarak
-3.) /users/murat/ yeni bi dosya oluşturdul mongodb-data diye.
+3.) /users/murat/ yeni bi dosya oluşturdul mongodb-data diye. => Store the data for database
 4.) konsolda herhangi bi yerde çalıştır => /Users/murat/mongodb/bin/mongod.exe --dbpath=/Users/murat/mongodb-data (bunun çalışır durumda olmassı lazım konsolda localhost db srever'unu ayakta tutar.)
 5.) mongodb admin tool için robo3T indir connect yap.
-6.) proje oluştur. Oluşturduğun projeye git. 
-7.= npm init -y
-8.) npm i mongodb@3.1.10
+6.) Bir proje oluştur. Oluşturduğun projeye git. 
+7.= npm init -y 
+8.) npm i mongodb@3.1.10 (https://mongodb.github.io/node-mongodb-native/3.1/api/) adresinden tüm komutlara bakabilirsin.
 
 -----------mongoose-----(orm like hibernate)------
 -) npm i mongoose@5.3.16
@@ -16,13 +16,23 @@
 2.) Connect dedik ve ip adresimizi değiştirdik. 0.0.0.0/0
 3.) Aynı yerden hemen bi db user oluşturcaz. username = (taskapp)  şifre = 13murat09
 4.) Son adım oalrak connect database yapıcaz bunu compass üzerinden yapıcaz indirmiştiik compass'ı.
-5.) url' kopyaladık sonra compassı açtık cınnect dedik db'mize bağlandı.
+5.) Connect using mongo db compass deyip url' kopyaladık sonra compassı açtık connect dedik db'mize bağlandı.
+ => url'i kopyalayıp compass'ı açtığında 6,7 ve 8. adımlar otomatik dolu gelecektir. 
 6.) url'deki cluster0-ybv96.mongodb.net => bu kısmı kopyaladım compass'de new connection diyip Hostname kısmına yapıştırdım.
 7.) srv record işaretledim. Authentication = username passwrod seçtim.
 8.) username = taskapp ve password ksıımlarına 13murat09 yazdım.
 9.) Favorite name = Production MongoDB Database (buraya kadar ki her alanı boş bıraktım.)
 Artık robo3t ihtiyacımız yok.
 
+
+EDIT:
+1.) Prod db'ye nasıl bağlanırsın ? 
+=> mongo atlas'a gittin. Login oldun username=muratcan.gokyokus@hotmail.com password:13murat09 => Cluster'dan task-app'i seçtin. Connect using MongoDB Compass dedin. Url kopyaladın. Compass'ı açtın. Connect to yaptın kendisi otomatik doldurdu zaten prod ayarlarını ve db'ye bağlandın.
+=> Projede .env dosyasında sadece local db bilileri var prod'u nerden tanıyor? => Bu değerleride herokuya set ediyorsun zaten (Readme:md: 55 ve 58.satırda).
+2.) local'e nasıl bağlanırsın ?
+=>Compass aç direk connect to de. Ok de. Tamam da Nereye bağlancak ?  Senin webstorm'da bir sekmede local'indeki db hep açık tutan komutun çalışması lazım ki localini görsün.
+
+ 
 ------------------------------DEPLOYYYYYYYYYYYYYYYYYY--------------
 1.) git init
 2.) .gitignore oluşturdum ve için de göndermek istemediğim dosyaları yada dizinleri yazdım.
